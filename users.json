@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "6749eb661b82b7bd4cf49ee5"
+  },
+  "username": "admin",
+  "passwordHash": "hashed",
+  "roles": [
+    "admin"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6749f7da1b82b7bd4cf49ee7"
+  },
+  "username": "user",
+  "passwordHash": "hashed",
+  "roles": [
+    "user"
+  ]
+}]
