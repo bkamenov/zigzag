@@ -30,6 +30,6 @@ public class CryptoQuery : ObjectGraphType
           var search = context.GetArgument<string>("search");
           return await cryptoRepository.GetCryptosCountAsync(search);
         })
-        .AuthorizeWithPolicy("AdminUser");
+        .AuthorizeWithPolicy("RegularUser");
   }
 }

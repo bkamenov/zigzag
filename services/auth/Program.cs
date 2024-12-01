@@ -74,8 +74,20 @@ builder.WebHost.ConfigureKestrel((context, options) =>
   }
 });
 
+// Add CORS policy
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("AllowAnyOrigin", policy =>
+  {
+    policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+  });
+});
+
 var app = builder.Build();
 
+app.UseCors("AllowAnyOrigin");
 app.UseMiddleware<TokenVerificationMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -23,8 +23,6 @@ public class TokenCleanupService : BackgroundService
     {
       try
       {
-        var expirationTime = DateTime.UtcNow.AddHours(-_jwtSettings.TokenLifetimeHours);
-
         // Remove expired tokens
         await _tokenRepository.RemoveExpiredTokensAsync();
 
@@ -35,8 +33,8 @@ public class TokenCleanupService : BackgroundService
         _logger.LogError(ex, "An error occurred during token cleanup.");
       }
 
-      // Wait for a minute before running again
-      await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+      // Wait for 1 hour before running again
+      await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
     }
   }
 }

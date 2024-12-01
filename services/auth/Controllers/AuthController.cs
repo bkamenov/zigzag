@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ApiAccess.DTOs;
 using System.Security.Claims;
 
-
-[Route("[controller]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -40,11 +38,44 @@ public class AuthController : ControllerBase
   }
 
   /// <summary>
+  /// Retrieves the username and the user roles for the currently logged user.
+  /// </summary>
+  /// <returns>Object {username, roles[]} if successful</returns>
+  [HttpGet("loginInfo")]
+  [Authorize]
+  public IActionResult loginInfo()
+  {
+    var username = User.FindFirst(ClaimTypes.Name)?.Value;
+    if (string.IsNullOrEmpty(username))
+    {
+      return Unauthorized(new
+      {
+        Message = "Username claim is not present."
+      });
+    }
+
+    var roles = User.FindAll(ClaimTypes.Role).Select(c => c.Value).ToList();
+    if (roles.Count == 0)
+    {
+      return Unauthorized(new
+      {
+        Message = "No role claima are present."
+      });
+    }
+
+    return Ok(new
+    {
+      username,
+      roles
+    });
+  }
+
+  /// <summary>
   /// Handles user logout.
   /// </summary>
   /// <returns>A success message if the token is invalidated.</returns>
   [HttpPost("logout")]
-  [Authorize] // Requires a valid JWT token to log out
+  [Authorize]
   public async Task<IActionResult> Logout()
   {
     var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

@@ -24,9 +24,9 @@ The solution contains following project:
 3. **ApiAccess** - Classlib to hold shared API-access related (authentication and authorization) DTO's, JWT related interfaces and services, SSL certificate helpers used accross all services.
 4. **DataAccess** - Classlib to hold shared data-related repositories + database context, interfaces and services.
 
-## Frontend crypto-client (ReactJS in Typescript + Redux toolkit)
+## Frontend crypto-dashboard (ReactJS in Typescript + Redux toolkit)
 
-The **crypto-client** application is a single page application using routing for the **login** and **main** pages. Depending on the environment (Local, Development, Production), which is invoked during the build process:
+The **crypto-dashboard** application is a single page application using routing for the **login** and **main** pages. Depending on the environment (Local, Development, Production), which is invoked during the build process:
 ```shell
 # Uses local endpoints for 'auth' and 'crypto' microservices
 npm build:local

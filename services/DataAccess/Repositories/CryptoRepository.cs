@@ -29,7 +29,13 @@ public class CryptoRepository : ICryptoRepository
         ? Builders<Crypto>.Filter.Empty
         : Builders<Crypto>.Filter.Regex(c => c.Name, new MongoDB.Bson.BsonRegularExpression(search, "i"));
 
-    return await _cryptos.Find(filter)
+    var options = new FindOptions
+    {
+      Collation = new Collation("en", strength: CollationStrength.Primary), // Case-insensitive collation (а как е за уникод?)
+    };
+
+    return await _cryptos.Find(filter, options)
+        .SortBy(c => c.Name)
         .Skip((page - 1) * pageCount)
         .Limit(pageCount)
         .ToListAsync();
